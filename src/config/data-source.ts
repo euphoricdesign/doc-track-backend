@@ -3,6 +3,8 @@ import { User } from "../entities/User";
 import { Credential } from "../entities/Credential";
 import { Appointment } from "../entities/Appointment";
 import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER, DATABASE_URL } from "./envs";
+import { Doctor } from "../entities/Doctor";
+import { MedicalCategory } from "../entities/MedicalCategory";
 
 
 export const AppDataSource = new DataSource({
@@ -16,7 +18,7 @@ export const AppDataSource = new DataSource({
     synchronize: true,
     // dropSchema: true,
     logging: false,
-    entities: [User, Credential, Appointment],
+    entities: [User, Credential, Appointment, Doctor, MedicalCategory],
     subscribers: [],
     migrations: [],
 })
