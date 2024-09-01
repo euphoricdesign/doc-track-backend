@@ -1,12 +1,21 @@
 import server from "./server";
 import { PORT } from "./config/envs";
-import "reflect-metadata"
 import { AppDataSource } from "./config/data-source";
+import { seedDatabase } from "./seeds/seedDatabse";
+import "reflect-metadata"
+
 
 AppDataSource.initialize()
-.then(res => {
-    console.log("Conexión a la base de datos realizada con éxito")
+  .then(async () => {
+    console.log("Conexión a la base de datos establecida");
+
+    // Ejecutar precarga de datos
+    await seedDatabase();
+
     server.listen(PORT, () => {
-        console.log(`Server listening on port ${PORT}`)
-    })
-})
+      console.log(`Server listening on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Error al iniciar la aplicación:", error);
+});
