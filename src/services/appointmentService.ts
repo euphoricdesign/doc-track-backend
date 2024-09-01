@@ -7,7 +7,7 @@ import { CustomError } from "./userService";
 
 export const getAllAppointmentsService = async (): Promise<Appointment[]> => {
     try {
-        const allAppointments = AppointmentRepository.find({
+        const allAppointments = await AppointmentRepository.find({
             relations: {
                 user: true
             }
@@ -58,4 +58,17 @@ export const cancelAppointmentService = async (appointmentId: number) => {
         appointment.status = AppointmentStatus.Cancelled
         await AppointmentRepository.save(appointment)
     }
+}
+
+export const rescheduleAppointmentService = async (appointmentId: number, newDate: any, newTime: any) => {
+    const appointment = await AppointmentRepository.findOneBy({id: appointmentId})
+
+    console.log(appointment)
+
+    if (!appointment) throw new CustomError("Turno no encontrado", 404)
+
+    appointment.date = newDate
+    appointment.time = newTime
+
+    await AppointmentRepository.save(appointment)   
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addNewAppointmentService, cancelAppointmentService, getAllAppointmentsService, getAppointmentService } from "../services/appointmentService";
+import { addNewAppointmentService, cancelAppointmentService, getAllAppointmentsService, getAppointmentService, rescheduleAppointmentService } from "../services/appointmentService";
 import { Appointment } from "../entities/Appointment";
 import { catchAsync } from "../utils/catchAsync";
 
@@ -24,8 +24,16 @@ export const addNewAppointment = catchAsync(async (req: Request, res: Response) 
     res.status(201).json(newAppointment)
 })
 
-export const cancelAppointment = async (req: Request, res: Response) => {
+export const cancelAppointment = catchAsync(async (req: Request, res: Response) => {
     const appointmentId: number = Number(req.params.id)
     await cancelAppointmentService(appointmentId)
     res.status(200).json({message: "Turno cancelado con éxito"})
-}
+})
+
+export const rescheduleAppointment = catchAsync(async (req: Request, res: Response) => {
+    const appointmentId: number = Number(req.params.id)
+    const { newDate, newTime }: any = req.body
+
+    await rescheduleAppointmentService(appointmentId, newDate, newTime)
+    res.status(200).json({message: "Turno reprogramado con éxito"})
+})
