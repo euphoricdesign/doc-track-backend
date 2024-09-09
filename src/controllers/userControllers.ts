@@ -15,8 +15,8 @@ export const getUser = catchAsync(async (req: Request, res: Response) => {
 })
 
 export const registerNewUser = catchAsync(async (req: Request, res: Response) => {
-    const {name, email, birthdate, nDni, username, password} = req.body;
-    const user: User = await registerNewUserService({name, email, birthdate, nDni, username, password})
+    const {name, email, username, password} = req.body;
+    const user: User = await registerNewUserService({name, email, username, password})
     res.status(201).json(user);
 })
 

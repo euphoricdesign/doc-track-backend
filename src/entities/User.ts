@@ -11,16 +11,10 @@ export class User {
 
     @Column()
     name: string
-
-    @Column()
-    birthdate: string
     
     @Column()
     email: string
     
-    @Column()
-    nDni: number
-
     @OneToOne(() => Credential)
     credential: Credential
 
