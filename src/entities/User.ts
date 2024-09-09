@@ -18,6 +18,6 @@ export class User {
     @OneToOne(() => Credential)
     credential: Credential
 
-    @OneToMany(() => Appointment, (appointment) => appointment.user)
+    @OneToMany(() => Appointment, (appointment: Appointment) => appointment.user)
     appointments: Appointment[]
 }

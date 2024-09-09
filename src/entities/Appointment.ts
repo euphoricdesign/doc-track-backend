@@ -29,9 +29,9 @@ export class Appointment {
     @Column({default: AppointmentStatus.Active})
     status: AppointmentStatus
 
-    @ManyToOne(() => User, (user) => user.appointments)
+    @ManyToOne(() => User, (user: User) => user.appointments)
     user: User
 
-    @ManyToOne(() => Doctor, (doctor) => doctor.appointments)
+    @ManyToOne(() => Doctor, (doctor: Doctor) => doctor.appointments)
     doctor: Doctor
 }

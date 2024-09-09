@@ -16,6 +16,6 @@ AppDataSource.initialize()
       console.log(`Server listening on port ${PORT}`);
     });
   })
-  .catch((error) => {
+  .catch((error: any) => {
     console.error("Error al iniciar la aplicación:", error);
 });

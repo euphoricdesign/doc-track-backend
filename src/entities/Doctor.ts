@@ -30,10 +30,10 @@ export class Doctor {
     @Column("text", { array: true })
     availableSlots: string[]
     
-    @ManyToMany(() => MedicalCategory, (category) => category.doctors)
+    @ManyToMany(() => MedicalCategory, (category: MedicalCategory) => category.doctors)
     @JoinTable() // Necesario para definir el lado propietario de la relación
     categories: MedicalCategory[];
 
-    @OneToMany(() => Appointment, (appointment) => appointment.doctor)
+    @OneToMany(() => Appointment, (appointment: Appointment) => appointment.doctor)
     appointments: Appointment[]
 }

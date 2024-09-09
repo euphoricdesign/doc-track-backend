@@ -15,7 +15,7 @@ export const getAvailableTimesService = async (date: string) => {
             where: { date }
         })
     
-        const takenTimes = existingAppointments.map(appointment => appointment.time)
+        const takenTimes = existingAppointments.map((appointment: any) => appointment.time)
     
         const availableTimes = allPossibleTimes.filter((time: any) => !takenTimes.includes(time))
     
