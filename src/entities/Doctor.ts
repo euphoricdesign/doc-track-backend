@@ -1,5 +1,6 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { MedicalCategory } from "./MedicalCategory";
+import { Appointment } from "./Appointment";
 
 @Entity({
     name: "doctors"
@@ -25,8 +26,14 @@ export class Doctor {
 
     @Column()
     image: string
+
+    @Column("text", { array: true })
+    availableSlots: string[]
     
     @ManyToMany(() => MedicalCategory, (category) => category.doctors)
     @JoinTable() // Necesario para definir el lado propietario de la relación
     categories: MedicalCategory[];
+
+    @OneToMany(() => Appointment, (appointment) => appointment.doctor)
+    appointments: Appointment[]
 }
