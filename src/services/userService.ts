@@ -20,9 +20,11 @@ export const getAllUsersService = async (): Promise<User[]> => {
     try {
         const allUsers: User[] = await UserRepository.find({
             relations: {
-                appointments: true
+                appointments: {
+                    doctor: true // Especifica que también se cargue la relación con el doctor
+                }
             }
-        })
+        });
         if (allUsers) return allUsers
         else throw new CustomError("Usuarios no encontrados", 404)
     } catch (error) {
@@ -37,7 +39,7 @@ export const getUserService = async (userId: number): Promise<User | null> => {
             where: {
               id: userId 
             },
-            relations: ['appointments'], 
+            relations: ['appointments', 'appointments.doctor'], 
           });
         if (user) return user
         else throw new CustomError("Usuario no encontrado", 404)
@@ -53,8 +55,6 @@ export const registerNewUserService = async (userData: UserDto): Promise<User> =
         const newUser = {
             name: userData.name,
             email: userData.email,
-            birthdate: userData.birthdate,
-            nDni: userData.nDni
         }
         
         const createdUser: User = await UserRepository.create(newUser)
@@ -76,7 +76,14 @@ export const loginUserService = async (credentials: any) => { //* Ver de crear u
     
         if (!credential || credential.password !== password) throw new CustomError("Credenciales invalidas", 401)
         else {
-            const user = await UserRepository.findOneBy({id: credential.id})
+            const user = await UserRepository.findOne({
+                where: { id: credential.id },  // Condición para encontrar al usuario
+                relations: {
+                    appointments: {
+                    doctor: true,  // Carga las relaciones de los turnos con los doctores
+                    }
+                }
+            })              
             const response = {
                 login: true,
                 user: user
