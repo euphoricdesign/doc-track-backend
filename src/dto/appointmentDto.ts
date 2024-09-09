@@ -3,6 +3,7 @@ interface AppointmentDto {
     time: string;
     description: string;
     userId: number;
+    doctorId: number
 
 }
 
