@@ -27,8 +27,8 @@ export class Doctor {
     @Column()
     image: string
 
-    @Column("text", { array: true })
-    availableSlots: string[]
+    @Column("text", { array: true, nullable: true })
+    availableSlots: string[];
     
     @ManyToMany(() => MedicalCategory, (category: MedicalCategory) => category.doctors)
     @JoinTable() // Necesario para definir el lado propietario de la relación
